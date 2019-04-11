@@ -17,14 +17,14 @@ app.use(cookieParser());
 app.use('/v1', v1Router);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use((err, res, req, next) => {
+app.use((err, req, res, next) => {
   let apiError = err
-
+  
   if(!err.status) {
     apiError = createError(err)
   }
@@ -32,10 +32,10 @@ app.use((err, res, req, next) => {
    // set locals, only providing error in development
    res.locals.message = apiError.message
    res.locals.error = process.env.NODE_ENV === 'development' ? apiError : {}
- 
+    
    // render the error page
-   return res.status(apiError.status)
-     .json({message: apiError.message})
+   return res.status(apiError.status).json({message: apiError.message})
+  
 })
 
 module.exports = app;
