@@ -1,18 +1,11 @@
 import httpStatus from 'http-status'
 import createError from 'http-errors'
-import {
-  models
-} from '../../models'
+import userRepo from '../../repositories/user.repository'
 
 const get = async (req, res, next) => {
   try {
     if (req.params.uuid) {
-      const {uuid} = req.params;
-      const user = await models.User.findOne({
-        where: {
-          uuid: Buffer(uuid, 'hex')
-        }
-      })
+      const user = await userRepo.find(req.params.uuid)
 
       if (!user) {
         throw (createError(httpStatus.NOT_FOUND, '사용자를 찾을 수 없습니다.'))
@@ -20,10 +13,11 @@ const get = async (req, res, next) => {
 
       return res
         .status(httpStatus.OK)
-        .json(user)
+        .json(user.toWeb())
     } else {
-      const users = await models.User.findAll()
-      return res.json(users)
+      const users = await userRepo.all()
+
+      return res.json(users.map(user => user.toWeb()))
     }
   } catch (e) {
     next(e)
