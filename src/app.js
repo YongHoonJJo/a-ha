@@ -5,7 +5,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 
-import indexRouter from './routes/index'
+import v1Router from './routes/v1'
 
 var app = express();
 
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
+app.use('/v1', v1Router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -22,11 +22,20 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use((err, req, res, next) => {
-  res.locals.message = err.message
-  res.locals.error = process.env.NODE_ENV === 'development' ? err : {}
-  
-  return res.status(err.status || 500).json(res.locals.error)
+app.use((err, res, req, next) => {
+  let apiError = err
+
+  if(!err.status) {
+    apiError = createError(err)
+  }
+
+   // set locals, only providing error in development
+   res.locals.message = apiError.message
+   res.locals.error = process.env.NODE_ENV === 'development' ? apiError : {}
+ 
+   // render the error page
+   return res.status(apiError.status)
+     .json({message: apiError.message})
 })
 
 module.exports = app;
