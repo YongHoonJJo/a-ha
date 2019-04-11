@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www --exec babel-node --presets @babel/preset-env"
+    "start": "nodemon ./bin/www --exec babel-node --presets @babel/preset-env",
+    "test": "NODE_ENV=test ./node_modules/.bin/jest tests --coverage"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
@@ -12,6 +13,7 @@
     "dotenv": "^7.0.0",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "jest": "^24.7.1",
     "moment": "^2.24.0",
     "morgan": "~1.9.0",
     "mysql2": "^1.6.5",
