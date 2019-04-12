@@ -41,6 +41,12 @@ const login = async (req, res, next) => {
   }
 }
 
-export {
-  login
+const tokenTest = async (req, res, next) => {
+  try {
+    return response(res, req.user)
+  } catch (e) {
+    next(e)
+  }
 }
+
+export { login, tokenTest }
