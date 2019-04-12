@@ -1,7 +1,8 @@
 import createError from 'http-errors'
 import jwt from 'jsonwebtoken'
 //import userRepo from '../repositories/user.repository'
-import userCache from '../caches/user.cache'
+//import userCache from '../caches/user.cache'
+import UserRepo from '../repositories/user.repository'
 
 export default async (req, res, next) => {
   try {
@@ -21,7 +22,9 @@ export default async (req, res, next) => {
         })
 
       //const user = await userRepo.find(uuid)
-      const user = await userCache.find(uuid)
+      //const user = await userCache.find(uuid)
+      const userRepo = new UserRepo()
+      const user = await userRepo.find(uuid)
 
       if (!user) {
         return next(createError(404, '사용자를 찾을 수 없습니다.'))
