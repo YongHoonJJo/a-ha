@@ -12,8 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       type: 'BINARY(16)',
       defaultValue: () => Buffer(uuid(), 'hex'),
-      get: function () {
-        return Buffer.from(this.getDataValue('uuid')).toString('hex')
+      get: function() {
+        return Buffer.from(this.getDataValue('uuid'))
+          .toString('hex')
       }
     },
     email: {
@@ -46,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   // print
-  User.prototype.toWeb = function () {
-    const values = Object.assign({}, this)
+  User.prototype.toWeb = function() {
+    const values = Object.assign({}, this.get())
 
     delete values.id
     delete values.password

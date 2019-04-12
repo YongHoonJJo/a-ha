@@ -20,7 +20,7 @@ beforeAll(async () => {
     email: randomString() + '@test.com',
     password: randomString()
   })
-  //console.log(`### ${user.uuid} ###`)
+  console.log(`### ${user.uuid} ###`)
 })
 
 afterAll(() => models.sequelize.close())
