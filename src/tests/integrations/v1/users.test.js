@@ -28,6 +28,7 @@ afterAll(() => models.sequelize.close())
 describe('GET: /v1/users', () => {
   test('전체 사용자 조회. | 200', async () => {
     let response = await request(app).get(`/v1/users`)
+
     expect(response.body.length).toBeGreaterThan(1)
   })
 
