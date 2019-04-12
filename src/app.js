@@ -4,7 +4,7 @@ import createError from 'http-errors'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
-
+import response from './utils/response'
 import v1Router from './routes/v1'
 
 var app = express();
@@ -29,12 +29,14 @@ app.use((err, req, res, next) => {
     apiError = createError(err)
   }
 
-   // set locals, only providing error in development
-   res.locals.message = apiError.message
-   res.locals.error = process.env.NODE_ENV === 'development' ? apiError : {}
+    // set locals, only providing error in development
+    res.locals.message = apiError.message
+    res.locals.error = process.env.NODE_ENV === 'development' ? apiError : {}
     
-   // render the error page
-   return res.status(apiError.status).json({message: apiError.message})
+    // render the error page
+    return response(res, {
+      message: apiError.message
+    }, apiError.status)
   
 })
 

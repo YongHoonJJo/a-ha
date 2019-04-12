@@ -3,6 +3,7 @@ import createError from 'http-errors'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import userRepo from '../../repositories/user.repository'
+import response from '../../utils/response'
 
 const login = async (req, res, next) => {
   try {
@@ -35,7 +36,7 @@ const login = async (req, res, next) => {
       expiresIn: ttl
     })
 
-    return res.json({data: {token}})
+    return response(res, {token})
   } catch (e) {
     next(e)
   }

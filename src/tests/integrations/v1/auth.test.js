@@ -44,7 +44,7 @@ describe('로그인 테스트', () => {
 
     expect(response.statusCode)
       .toBe(404)
-    expect(response.body.message)
+    expect(response.body.data.message)
       .toBe('사용자를 찾을 수 없습니다.')
   })
 
@@ -58,7 +58,7 @@ describe('로그인 테스트', () => {
 
     expect(response.statusCode)
       .toBe(422)
-    expect(response.body.message)
+    expect(response.body.data.message)
       .toBe('비밀번호를 확인 해주세요.')
   })
 })
